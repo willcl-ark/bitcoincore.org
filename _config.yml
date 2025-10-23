@@ -36,6 +36,9 @@ exclude:
   - vendor  # CI creates a vendor/ dir with files we shouldn't render
   - contrib
   - Makefile
+  - flake.nix
+  - flake.lock
+  - gemset.nix
 
 include:
   - .well-known
