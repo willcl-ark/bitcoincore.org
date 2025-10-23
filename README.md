@@ -40,8 +40,62 @@ permalink: /en/2016/01/01/short-title
 
 ## Building
 
-This website is based on [Jekyll](https://jekyllrb.com/).  To build
-locally, [install Ruby 3.1.2](https://gorails.com/setup) using system
+This website is based on [Jekyll](https://jekyllrb.com/). There are two ways to build and develop locally:
+
+### Option 1: Using Nix Flakes (Recommended)
+
+If you have [Nix](https://nixos.org/download) installed with flakes enabled, this is the easiest method as it provides a reproducible development environment:
+
+    git clone https://github.com/bitcoin-core/bitcoincore.org.git
+    cd bitcoincore.org
+
+#### Development
+
+Enter the development environment:
+
+    nix develop
+
+This will provide you with Ruby, Jekyll, and all dependencies. You can then:
+
+- preview the site (launches webserver on port 4000):
+  ```
+  make preview
+  ```
+
+- Build the site (output in `_site` directory):
+  ```
+  nix build
+  ```
+  Or using make:
+  ```
+  make build
+  ```
+
+- Run tests:
+  ```
+  make test
+  ```
+
+#### Using Nix Apps
+
+You can also run tasks directly without entering the shell:
+
+    nix run .#preview
+    nix run .#build
+    nix run .#test
+
+#### Managing Ruby Gems
+
+When you need to add or update gems:
+
+1. Add gems to `Gemfile`
+2. Update lockfile `bundle lock` (or `bundle lock --update=GEM_NAME` for specific gems)
+3. Regenerate gems: `bundix`
+4. Commit `Gemfile`, `Gemfile.lock`, and `gemset.nix`
+
+### Option 2: Traditional Ruby Setup
+
+To build locally using traditional Ruby tools, [install Ruby 3.1.7](https://gorails.com/setup) using system
 packages, [rvm](https://rvm.io), [rbenv](https://github.com/rbenv/rbenv), or another method.
 Then clone this repository and change directory into it:
 
